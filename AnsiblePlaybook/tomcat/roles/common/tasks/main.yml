@@ -1,0 +1,7 @@
+- name: Install git package
+  apt: name=git state=present
+
+
+- name: Install Java package
+  apt: name=default-jdk state=present
+

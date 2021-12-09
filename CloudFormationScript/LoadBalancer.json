@@ -1,0 +1,108 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Example load balancer template that shows a front end server that is accessible by the public and an api-server that is only available by the webapp frontend",
+
+  "Parameters" : {
+    "VpcId" : {
+      "Type" : "String",
+      "Description" : "VpcId of the vpc we are launching these load balancers in.  This comes from the output of vpc.template"
+    },
+
+    "PublicSubnets" : {
+      "Description" : "The public subnets that have access to the private subnets where instances live.  This comes from the output of vpc.template",
+      "Type" : "CommaDelimitedList"
+    },
+
+    "SSLCertID" : {
+      "Description" : "SSL Certificate ID from Certificate Manager in AWS",
+      "Type" : "String"
+    }
+  },
+
+  "Mappings" : {
+  },
+
+  "Resources" : {
+
+    "WebappLoadBalancer" : {
+      "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties" : {
+        "LoadBalancerName" : {"Fn::Join" : ["-", ["webapp", { "Ref" : "VpcId" } ]]},
+        "SecurityGroups" : [ { "Ref" : "PublicLoadBalancerSecurityGroup" } ],
+        "Subnets" : { "Ref" : "PublicSubnets" },
+        "AppCookieStickinessPolicy" : 
+          [ {
+            "PolicyName" : "HTTPSCookieStickinessPolicy",
+            "CookieName" : "connect.sid"
+          } ],
+        "Listeners" : 
+          [ {
+            "LoadBalancerPort" : "80",
+            "InstancePort" : "80",
+            "Protocol" : "HTTP"
+          },
+          {
+            "LoadBalancerPort": "443",
+            "InstancePort" : "8080",
+            "Protocol" : "HTTPS",
+            "PolicyNames" : [ "HTTPSCookieStickinessPolicy" ],
+            "SSLCertificateId" : [ { "Ref" : "SSLCertID" } ]
+          } ],
+        "HealthCheck" : {
+          "Target" : { "Fn::Join" : [ "", ["HTTP:8080", "/status"]]},
+          "HealthyThreshold" : "5",
+          "UnhealthyThreshold" : "3",
+          "Interval" : "30",
+          "Timeout" : "5"
+        }
+      }
+    },
+    "PublicLoadBalancerSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Enable HTTP/HTTPS access on port 80/443 to 80/8080",
+        "VpcId" : { "Ref" : "VpcId" },
+        "SecurityGroupIngress" : [ { 
+          "IpProtocol" : "tcp",
+          "FromPort" : "80",
+          "ToPort" : "80",
+          "CidrIp" : "0.0.0.0/0"
+        },
+        { 
+          "IpProtocol" : "tcp",
+          "FromPort" : "443",
+          "ToPort" : "443",
+          "CidrIp" : "0.0.0.0/0"
+        } ],
+        "SecurityGroupEgress" : [ { 
+          "IpProtocol" : "tcp",
+          "FromPort" : "80",
+          "ToPort" : "80",
+          "CidrIp" : "0.0.0.0/0"
+        },
+        { 
+          "IpProtocol" : "tcp",
+          "FromPort" : "8080",
+          "ToPort" : "8080",
+          "CidrIp" : "0.0.0.0/0"
+        } ]
+      }
+    }
+  },
+
+  "Outputs" : {
+    "WebappLoadBalancer" : {
+      "Description": "webapp load balancer",
+      "Value": { "Ref" : "WebappLoadBalancer" }
+    },
+    "WebappLoadBalancerDns" : {
+      "Description": "webapp load balancer DNS",
+      "Value": { "Fn::GetAtt" : ["WebappLoadBalancer", "DNSName"] }
+    },
+    "PublicLoadBalancerSecurityGroup" : {
+      "Description" : "security group for webapp load balancers",
+      "Value" :  { "Ref" : "PublicLoadBalancerSecurityGroup" }
+    }
+  }
+}

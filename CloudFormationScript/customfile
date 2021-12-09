@@ -1,0 +1,90 @@
+{
+"AWSTemplateFormatVersion" : "2010-09-09",
+"Description" : "TTND AWS CloudFormation template to launch first instance",
+"Parameters" : {
+
+			"KeyName" : {
+				"Description" : "EC2 Key Pair for SSH Access",
+				"Default" : "swiftjob",
+				"MinLength": "1",
+				"Type": "String",
+				"MaxLength": "64",
+				"AllowedPattern" : "[-_ a-zA-Z0-9]*",
+				"ConstraintDescription" : "can contain only alphanumeric characters, spaces, dashes and underscores."
+			},
+
+			"InstanceType" : {
+				"Description" : "Instance1 EC2 instance type",
+				"Type" : "String",
+				"Default" : "t2.micro",
+				"AllowedValues" : [ "t2.micro","m1.small","m1.medium","m1.large","m1.xlarge","m2.xlarge","m2.2xlarge","m2.4xlarge","m3.medium","m3.xlarge","c4.xlarge","c4.4xlarge","m3.2xlarge","c1.medium","c1.xlarge","cc1.4xlarge","c4.large","cc2.8xlarge","cg1.4xlarge"],
+				"ConstraintDescription" : "must be a valid EC2 instance type."
+			},
+			"AWSRegion": {
+			  "Description": "AWS Region name",
+			  "Type": "String",
+			  "Default": "ap-south-1"
+			},
+			"VPC": {
+			  "Description": "AWS VPC ID",
+			  "Type": "String",
+			  "Default": "vpc-ce6a9ca6"
+			},
+			"PublicSubnets" : {
+			  "Description" : "The public subnets that have access to the private subnets where instances live.  This comes from the output of vpc.template",
+			  "Type" : "String",
+			  "Default" : "subnet-74847a1c"
+			},
+			"ImageId": {
+			  "Description": "AWS Image ID",
+			  "Type": "String",
+			  "Default": "ami-f3e5aa9c"
+			},
+			,
+			"SecurityGroup": {
+			  "Description": "AWS Security Group",
+			  "Type": "String",
+			  "Default": "sg-f3e5aa9c"
+			}
+		},
+
+"Resources" : {
+
+
+      "Instance" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType" : { "Ref" : "InstanceType" },
+        "ImageId" : { "Ref" : "ImageId" },
+		"NetworkInterfaces" : [
+			{ "DeviceIndex" : "0",
+			  "AssociatePublicIpAddress" : "false",
+			  "DeleteOnTermination" : "true",
+			  "SubnetId" : { "Ref" : "PublicSubnets" },
+			  "GroupSet" : [ { "Ref" : "SecurityGroup" } ]
+			}
+		  ],
+	"BlockDeviceMappings" : [
+          {
+            "DeviceName" : "/dev/sda1",
+            "Ebs" : { "VolumeSize" : "8" } 
+          }
+        ],
+        "Tags" : [
+        {"Key": "Name", "Value": "Project_Instance"}
+         ]
+      }}
+	  },
+
+"Outputs" : {
+	 "InstanceId" : {
+	 "Description" : "InstanceId of the newly created Mysql instance",
+	 "Value" : { "Ref" : "Instance" }
+ },
+ "WebUrl" : {
+	 "Description" : "This is the endpoint of application.",
+	 "Value" : { "Fn::Join" : [ "", [ "https://", { "Fn::GetAtt" : [ "Instance", "PrivateIp"] } , ":80" ] ] }
+	}
+ }
+}

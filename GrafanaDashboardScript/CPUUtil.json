@@ -1,0 +1,14 @@
+{
+  "alias": "Rushi",
+  "dimensions": {
+    "InstanceId": "i-0bc0f361af0abc427"
+  },
+  "metricName": "CPUUtilization",
+  "namespace": "AWS/EC2",
+  "period": "",
+  "refId": "A",
+  "region": "us-east-1",
+  "statistics": [
+    "Average"
+  ]
+}

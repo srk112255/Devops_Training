@@ -1,0 +1,151 @@
+409  ansible -m ping localhost
+  410  vi /etc/ansible/hosts
+  411  ansible -m ping localhost
+  412  ansible -m ping all
+  413  ansible -m ping 10.120.11.1
+  414  vi /etc/ansible/hosts
+  415  clear
+  416  ansible -m ping all
+  417  ansible -m ping webservers
+  418  ansible -m ping dbservers
+  419  ansible -m ping all
+  420  ansible -m ping localhost
+  421  vi /etc/ansible/hosts
+  422  ansible -m ping all
+  423  ssh localhosts
+  424  ssh localhost
+  425  clear
+  426  cd
+  427  ls -alrt
+  428  ssh-keygen -t rsa
+  429  cd .ssh/
+  430  ls -alrt
+  431  cat id_rsa.pub
+  432  ssh 52.66.99.93
+  433  pwd
+  434  ls -alrt
+  435  cat id_rsa.pub
+  436  pwd
+  437  ssh 52.66.99.93
+  438  ls -alrt
+  439  cd
+  440  ls -alrt
+  441  ansible -m ping 52.66.99.93
+  442  vi /etc/ansible/hosts
+  443  ansible -m ping 52.66.99.93
+  444  ansible -m shell -a "date"
+                                              
+
+
+  443  ansible -m ping 52.66.99.93
+  444  ansible -m shell -a "date"
+  445  ansible -m shell -a "date" a;;
+  446  ansible -m shell -a "date" all
+  447  ansible -m shell -a "df -h" all
+  448  ansible -m shell -a "apt-get -y install tree" all
+  449  ls -alrt
+  450  pwd
+  451  mkdir playbook
+  452  cd playbook/
+  453  ls -alrt
+  454  pwd
+  455  ls -alrt
+  456  vi tomcat.yml
+  457  ls -lart
+  458  mv tomcat.yml main.yml
+  459  ls -lart
+  460  pwd
+  461  mkdir roles
+  462  cd roles/
+  463  ls -lart
+  464  mkdir common
+  465  mkdir tomcat
+  466  ls -alrt
+  467  cd common/
+  468  ls -alrt
+  469  mkdir tasks
+  470  cd ../tomcat/
+  471  mkdir tasks
+  472  cd ../
+  473  ls -lart
+  474  cd ../
+  475  ls -lart
+  476  vi main.yml
+  477  cat main.yml
+  478  ansible-playbook main.yml
+
+
+  477  cat main.yml
+  478  ansible-playbook main.yml
+  479  vi roles/common/tasks/main.yml
+  480  ansible-playbook main.yml
+  481  ansible-playbook main.yml -vvv
+  482  vi roles/common/tasks/main.yml
+  483  ansible-playbook main.yml
+  484  vi roles/common/tasks/main.yml
+  485  ansible-playbook main.yml
+  486  vi roles/common/tasks/main.yml
+  487  ansible-playbook main.yml
+  488  ansible-playbook main.yml -vvv
+  489  vi roles/common/tasks/main.yml
+  490  ansible-playbook main.yml
+  491  vi /etc/ansible/hosts
+  492  netstat -ntlp
+  493  kubectl destroy
+  494  kubeadm destroy
+  495  kubeadm --help
+  496  apt-get remove --purge kubectl kubeadm
+  497  apt-get remove --purge docker.io*
+  498  rm -rf /var/lib/docker
+  499  service docker stop
+  500  ps -ef | grep docker
+  501  kill -9 28354     28538
+  502  ps -ef | grep docker
+  503  apt-get remove --purge docker.io*
+  504  rm -rf /var/lib/docker
+  505  ps -ef | grep docker
+  506  ansible-playbook main.yml
+  507  cd
+  508  ls -alrt
+  509  ssh localhost
+  510  cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+  511  ssh localhost
+  512  ansible-playbook main.yml
+
+
+  510  cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+  511  ssh localhost
+  512  ansible-playbook main.yml
+  513  cd playbook/
+  514  ansible-playbook main.yml
+  515  vi roles/tomcat/tasks/main.yml
+  516  vi main.
+  517  vi main.yml
+  518  ansible-playbook main.yml
+  519  ls -alrt /opt/
+  520  netstat -ntlp
+  521  ps -ef | grep java
+  522  rm -rf /opt/*
+  523  ansible-playbook main.yml
+  524  vi roles/tomcat/tasks/main.yml
+  525  ansible-playbook main.yml
+  526  vi roles/tomcat/tasks/main.yml
+  527  ansible-playbook main.yml
+  528  vi roles/tomcat/tasks/main.yml
+  529  ansible-playbook main.yml
+  530  vi roles/tomcat/tasks/main.yml
+  531  ansible-playbook main.yml
+  532  ls -alrt /opt/tomcat/apache-tomcat-8.5.31/
+  533  ls -alrt /opt/tomcat/apache-tomcat-8.5.31/bin/
+  534  vi roles/tomcat/tasks/main.yml
+  535  ansible-playbook main.yml
+  536  vi roles/tomcat/tasks/main.yml
+  537  ansible-playbook main.yml
+  538  vi roles/tomcat/tasks/main.yml
+  539  ansible-playbook main.yml
+  540  ps -ef | grep java
+  541  netstat -ntlp
+  542  ls -lart
+  543  vi roles/tomcat/tasks/main.yml
+  544  ansible-playbook main.yml
+  545*
