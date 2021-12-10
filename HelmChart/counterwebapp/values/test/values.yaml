@@ -1,0 +1,7 @@
+image:
+   name: jocatalin/kubernetes-bootcamp
+   tag: v1
+replicascount: 1
+labels:
+   app: ais
+   tier: web
